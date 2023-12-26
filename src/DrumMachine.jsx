@@ -24,24 +24,22 @@ function DrumPad({text, url, color, changeDisplay, sound}) {
         toggle();
         changeDisplay(sound);
     }
-    useEffect(()=>{
-        const drumPad = document.getElementById(text);
+    useEffect(() => {
+        const audio = audioRef.current;
 
-        if (drumPad) {
-            if (playing) {
-                drumPad.currentTime = 0; // Reset audio to the beginning
-                drumPad.play();
-            } else {
-                drumPad.pause();
-            }
+        if (playing) {
+        audio.currentTime = 0;
+        audio.play();
+        } else {
+        audio.pause();
         }
-    }, [playing, sound]);
+    }, [playing]);
 
 
     return (
         <button className="drum-pad" onClick={handleClick} style={{backgroundColor: color}} id={sound}>
             {text}
-            <audio src={url} className="clip" id={text}></audio>
+            <audio ref={audioRef} src={url} className="clip" id={text}></audio>
         </button>
     );
 }
